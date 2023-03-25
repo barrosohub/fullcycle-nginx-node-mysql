@@ -7,7 +7,7 @@ const PORT = 3000;
 const dbConfig = {
   host: 'db',
   user: 'root',
-  password: 'root',
+  password: 'my-secret-password',
   database: 'desafio_nginx_node'
 };
 
