@@ -15,6 +15,7 @@ services:
       - '3000:3000'
     volumes:
       - .:/app
+      - node_modules:/app/node_modules
   nginx:
     image: nginx
     container_name: nginx
@@ -33,4 +34,5 @@ services:
       - db_data:/var/lib/mysql
 
 volumes:
-  db_data: 
+  db_data:
+  node_modules:
