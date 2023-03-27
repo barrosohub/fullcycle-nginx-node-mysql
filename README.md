@@ -1,53 +1,48 @@
-## Desafio Fullcycle Nginx + Node.js + MySQL
+# FullCycle Nginx-Node-MySQL
 
-This project sets up three containers using Docker Compose:
+This project is a Node.js application with Nginx and MySQL using Docker Compose.
 
-- A Node.js container running a Node.js application using the `Dockerfile`.
-- An Nginx container serving as a reverse proxy to the Node.js application.
-- A MySQL 5.7 database container using the `mysql:5.7` image.
+## Prerequisites
 
-### Requirements
+- Docker
+- Docker Compose
 
-- Docker and Docker Compose must be installed on the host machine.
+## Instructions to run the project
 
-### Usage
+1. Clone the repository:
 
-1. Clone the repository to your local machine.
-2. Navigate to the project directory in a terminal.
-3. Run the command `docker-compose up -d` to start the containers in the background.
-4. Access the Node.js application at `http://localhost:3000`.
-5. Access the Nginx server at `http://localhost:8080`.
+   ``` git clone https://github.com/seuusuario/fullcycle-nginx-node-mysql.git ```
+    
+   ``` cd fullcycle-nginx-node-mysql ```
+    
+2. Build and start the containers:
 
-### Configuration
+    ```
+    docker-compose down 
+    docker-compose build
+    docker-compose up -d
+    ```
 
-#### Node.js
+3. Access the application in your browser:
 
-The Node.js container is configured to:
+    http://localhost:8080
 
-- Build the image using the `Dockerfile` in the project directory.
-- Name the container `node`.
-- Restart the container automatically with the host machine.
-- Depend on the `db` container.
-- Set the environment variable `DB_HOST` to `db`.
-- Publish port `3000` of the container to port `3000` of the host machine.
-- Create a volume between the project directory and the `/app` directory inside the container  to allow live code changes during development.
+Nginx is configured to serve the application on port 8080, and the Node.js application is running on port 3000.
 
-#### Nginx
+## Project Structure
 
-The Nginx container:
+- `app.js`: main file of the Node.js application.
+- `Dockerfile`: defines the Node.js container configuration.
+- `docker-compose.yml`: defines the configuration of all project services (Node.js, Nginx and MySQL).
+- `nginx.conf`: Nginx configuration file.
 
-- Uses the official Nginx image.
-- Name the container `nginx`.
-- Restart the container automatically with the host machine.
-- Publish port `80` of the container to port `8080` of the host machine.
-- Create a volume between the `nginx.conf` file in the project directory and the `/etc/nginx/nginx.conf` in the container.
+## Database
 
-#### MySQL
+The MySQL database is configured to use the `db_data` volume to store its data. To connect to the database, use the following information:
 
-The MySQL database container:
-
-- Uses the official MySQL 5.7 image.
-- Name the container `db`.
-- Restart the container automatically with the host machine.
-- Set the environment variable `MYSQL_ROOT_PASSWORD` to `my-secret-password`.
-- Create a volume between the `db_data` directory in the host machine and `/var/lib/mysql` directory in the container, to persist data when containers are destroyed.
+```
+Host: db
+Port: 3306
+User: root
+Password: my-secret-password
+```
