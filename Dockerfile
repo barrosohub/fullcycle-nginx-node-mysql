@@ -1,24 +1,24 @@
-# Define a imagem base
+# Define the base image
 FROM node:14-alpine
 
-# Define o diretório de trabalho
+# Define the working directory
 WORKDIR /app
 
-# Copia os arquivos necessários para dentro do container
+# Copy the necessary files into the container
 COPY package*.json ./
 COPY app.js ./
 
-# Baixa o script wait-for-it do GitHub
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /wait-for-it.sh
+# Install the curl utility to download wait-for-it.sh
+RUN apk add --no-cache curl
 
-# Define permissão de execução para o script
-RUN chmod +x /wait-for-it.sh
+# Download wait-for-it.sh from GitHub and make it executable
+RUN curl -sSLo /app/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && chmod +x /app/wait-for-it.sh
 
-# Instala as dependências da aplicação
+# Install the application dependencies
 RUN npm install
 
-# Expõe a porta 3000, que é a porta em que a aplicação Node.js está ouvindo
+# Expose port 3000, which is the port that the Node.js application is listening on
 EXPOSE 3000
 
-# Inicia a aplicação Node.js quando o container for iniciado
-CMD ["/wait-for-it.sh", "mysql:3306", "--", "npm", "start"]
+# Start the Node.js application when the container is started
+CMD ["/bin/ash", "-c", "/app/wait-for-it.sh db:3306 ; npm start"]
