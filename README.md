@@ -11,7 +11,7 @@ This project is a Node.js application with Nginx and MySQL using Docker Compose.
 
 1. Clone the repository:
 
-   ``` git clone https://github.com/seuusuario/fullcycle-nginx-node-mysql.git ```
+   ``` git clone https://github.com/barrosohub/fullcycle-nginx-node-mysql.git ```
     
    ``` cd fullcycle-nginx-node-mysql ```
     
