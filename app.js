@@ -75,6 +75,7 @@ class App {
     }
     const people = await this.peopleRepository.getPeople();
     let response = "<h1>Full Cycle Rocks!</h1>";
+    response += `<p>Você pode facilmente adicionar novos users via GET Params. </br><em><code>/?name=Wesley</code></em></p>`;
     response += "<ul>";
     people.forEach((person) => {
       response += `<li>${person.name}</li>`;
