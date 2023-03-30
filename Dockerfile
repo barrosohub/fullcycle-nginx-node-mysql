@@ -1,5 +1,5 @@
 # Define the base image
-FROM node:14-alpine
+FROM node:16-alpine
 
 # Define the working directory
 WORKDIR /app
@@ -7,12 +7,13 @@ WORKDIR /app
 # Copy the necessary files into the container
 COPY package*.json ./
 COPY app.js ./
+COPY wait-for-it.sh ./
 
-# Install the curl utility to download wait-for-it.sh
-RUN apk add --no-cache curl
+# Install the curl and bash utilities
+RUN apk add --no-cache curl bash
 
-# Download wait-for-it.sh from GitHub and make it executable
-RUN curl -sSLo /app/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && chmod +x /app/wait-for-it.sh
+# Change permissions of the wait-for-it.sh file
+RUN chmod +x wait-for-it.sh
 
 # Install the application dependencies
 RUN npm install
@@ -21,4 +22,4 @@ RUN npm install
 EXPOSE 3000
 
 # Start the Node.js application when the container is started
-CMD ["/bin/ash", "-c", "/app/wait-for-it.sh db:3306 ; npm start"]
+CMD ["/bin/bash", "-c", "/app/wait-for-it.sh db:3306 -- npm start"]

@@ -1,48 +1,33 @@
-# FullCycle Nginx-Node-MySQL
+## Instruções
 
-This project is a Node.js application with Nginx and MySQL using Docker Compose.
+Para executar este projeto, siga as etapas abaixo:
 
-## Prerequisites
+1. Instale o Docker em sua máquina, se ainda não o tiver. Você pode baixar o Docker [aqui](https://www.docker.com/get-started).
 
-- Docker
-- Docker Compose
+2. Clone este repositório para a sua máquina local, executando o seguinte comando no seu terminal:
 
-## Instructions to run the project
-
-1. Clone the repository:
-
-   ``` git clone https://github.com/barrosohub/fullcycle-nginx-node-mysql.git ```
-    
-   ``` cd fullcycle-nginx-node-mysql ```
-    
-2. Build and start the containers:
-
-    ```
-    docker-compose down 
-    docker-compose build
-    docker-compose up -d
-    ```
-
-3. Access the application in your browser:
-
-    http://localhost:8080
-
-Nginx is configured to serve the application on port 8080, and the Node.js application is running on port 3000.
-
-## Project Structure
-
-- `app.js`: main file of the Node.js application.
-- `Dockerfile`: defines the Node.js container configuration.
-- `docker-compose.yml`: defines the configuration of all project services (Node.js, Nginx and MySQL).
-- `nginx.conf`: Nginx configuration file.
-
-## Database
-
-The MySQL database is configured to use the `db_data` volume to store its data. To connect to the database, use the following information:
-
+```bash
+git clone https://github.com/barrosohub/fullcycle-nginx-node-mysql.git
 ```
-Host: db
-Port: 3306
-User: root
-Password: my-secret-password
+
+3. No seu terminal, navegue até a pasta raiz do repositório clonado.
+
+4. Construa as imagens do Docker para as aplicações e serviços de banco de dados executando o seguinte comando:
+
+```bash
+docker-compose build
 ```
+
+5. Inicie os containers do Docker executando o seguinte comando:
+
+```bash
+docker-compose up
+```
+
+Isso irá iniciar os containers para a aplicação, banco de dados e servidor web Nginx.
+
+6. Depois que os containers estiverem funcionando, você pode acessar a aplicação abrindo seu navegador da web e navegando até `http://localhost:8080`.
+
+7. Para parar os containers, digite `ctrl + c` no terminal.
+
+Pronto! Agora você tem o projeto em execução em sua máquina.

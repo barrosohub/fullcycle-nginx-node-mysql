@@ -9,6 +9,27 @@ class Database {
   async connect() {
     return await mysql.createConnection(this.config);
   }
+  
+
+  async createTableIfNotExists() {
+    const connection = await this.connect();
+    const [rows] = await connection.execute(`
+      SELECT COUNT(*)
+      FROM information_schema.tables
+      WHERE table_schema = '${this.config.database}' AND table_name = 'people'
+    `);
+
+    if (rows[0]['COUNT(*)'] === 0) {
+      await connection.execute(`
+        CREATE TABLE people (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          name VARCHAR(255) NOT NULL
+        )
+      `);
+    }
+
+    await connection.end();
+  }
 }
 
 class PeopleRepository {
@@ -34,6 +55,7 @@ class App {
   constructor(peopleRepository) {
     this.app = express();
     this.peopleRepository = peopleRepository;
+    this.app.get('/', (req, res) => this.handleRequest(req, res));
   }
 
   async handleRequest(req, res) {
@@ -52,7 +74,6 @@ class App {
   }
 
   start(port) {
-    this.app.get('/', (req, res) => this.handleRequest(req, res));
     this.app.listen(port, () => {
       console.log(`Server running at http://localhost:${port}`);
     });
@@ -71,4 +92,11 @@ const peopleRepository = new PeopleRepository(database);
 const app = new App(peopleRepository);
 const PORT = 3000;
 
-app.start(PORT);
+(async () => {
+  try {
+    await database.createTableIfNotExists();
+    app.start(PORT);
+  } catch (err) {
+    console.error('Error creating database or table:', err);
+  }
+})();
