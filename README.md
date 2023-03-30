@@ -31,7 +31,7 @@ docker-compose build
 docker-compose up
 ```
 
-Isso irá iniciar os containers para a aplicação, banco de dados e servidor web Nginx.
+<em>Isso irá iniciar os containers para a plicação, banco de dados e servidor web Nginx.</em>
 
 6. Depois que os containers estiverem funcionando, você pode acessar a aplicação abrindo seu navegador da web e navegando até `http://localhost:8080`.
 
