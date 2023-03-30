@@ -35,6 +35,5 @@ Isso irá iniciar os containers para a aplicação, banco de dados e servidor we
 
 6. Depois que os containers estiverem funcionando, você pode acessar a aplicação abrindo seu navegador da web e navegando até `http://localhost:8080`.
 
-7. Para parar os containers, digite `ctrl + c` no terminal.
 
 Pronto! Agora você tem o projeto em execução em sua máquina. :tada:
