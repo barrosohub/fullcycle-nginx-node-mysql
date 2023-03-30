@@ -9,7 +9,7 @@ class Database {
   async connect() {
     return await mysql.createConnection(this.config);
   }
-  
+
 
   async createTableIfNotExists() {
     const connection = await this.connect();
@@ -49,6 +49,14 @@ class PeopleRepository {
     await connection.end();
     return rows;
   }
+
+  async checkIfpeopleExists(name) {
+    const connection = await this.database.connect();
+    const [rows] = await connection.execute('SELECT COUNT(*) FROM people WHERE name = ?', [name]);
+    await connection.end();
+    return rows[0]['COUNT(*)'] > 0;
+  }
+
 }
 
 class App {
@@ -59,8 +67,9 @@ class App {
   }
 
   async handleRequest(req, res) {
-    const name = req.query.name;
-    if (name) {
+    const name = req.query.name || 'Barroso Filho';
+    const exists = await this.peopleRepository.checkIfpeopleExists(name);
+    if (!exists) {
       await this.peopleRepository.insertPerson(name);
     }
     const people = await this.peopleRepository.getPeople();
@@ -72,6 +81,7 @@ class App {
     response += '</ul>';
     res.send(response);
   }
+
 
   start(port) {
     this.app.listen(port, () => {
