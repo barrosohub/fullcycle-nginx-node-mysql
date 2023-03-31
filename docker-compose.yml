@@ -12,6 +12,7 @@ services:
       - db
     environment:
       DB_HOST: db
+      DB_DATABASE: desafio_nginx_node
     ports:
       - '3000:3000'
     volumes:
@@ -27,7 +28,6 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
   db:
     image: mysql:5.7
-    command: --innodb-use-native-aio=0 --init-file /docker-entrypoint-initdb.d/init.sql
     container_name: db
     restart: always
     tty: true
@@ -35,7 +35,6 @@ services:
       MYSQL_ROOT_PASSWORD: my-secret-password
     volumes:
       - db_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   db_data:
