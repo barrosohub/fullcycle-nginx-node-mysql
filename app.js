@@ -36,7 +36,7 @@ class PeopleRepository {
     this.database = database;
   }
 
-  async insertPerson(name) {
+  async insertPeople(name) {
     const connection = await this.database.connect();
     await connection.execute("INSERT INTO people (name) VALUES (?)", [name]);
     await connection.end();
@@ -71,7 +71,7 @@ class App {
     const name = req.query.name || "Barroso Filho";
     const exists = await this.peopleRepository.checkIfpeopleExists(name);
     if (!exists) {
-      await this.peopleRepository.insertPerson(name);
+      await this.peopleRepository.insertPeople(name);
     }
     const people = await this.peopleRepository.getPeople();
     let response = "<h1>Full Cycle Rocks!</h1>";
