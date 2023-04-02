@@ -46,7 +46,7 @@ class PeopleRepository {
     this.pool = database.pool;
   }
 
-  async insertPerson(name) {
+  async insertPeople(name) {
     await this.pool.execute("INSERT INTO people (name) VALUES (?)", [name]);
   }
 
@@ -72,7 +72,7 @@ class App {
     const name = req.query.name || "Barroso Filho";
     const exists = await this.peopleRepository.checkIfPersonExists(name);
     if (!exists) {
-      await this.peopleRepository.insertPerson(name);
+      await this.peopleRepository.insertPeople(name);
     }
     const people = await this.peopleRepository.getPeople();
     let response = "<h1>Full Cycle Rocks!</h1>";
